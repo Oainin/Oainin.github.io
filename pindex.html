@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!--状态栏图标设置-->
+		<link rel="shortcut icon" href="img/Oainin.png" type=" image/png" />
+		<!--css文件引入-->
+		<link href="css/phone_index.css" rel="stylesheet" type="text/css" />
+		<!-- jquery -->
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<!--时间转换引入-->
+		<script type="text/javascript" src="js/timetotime.js"></script>
+		<script type="text/javascript" src="js/index_phone.js"></script>
+		<script>
+			/*获取时间*/
+			var now = new Date();
+			/*获取当前阴历*/
+			var lnow = calendar.solar2lunar(now.getFullYear(), now.getMonth() + 1, now.getDate());
+			
+		</script>
+	</head>
+
+	<body>
+		<div id="header">
+			<h1 id="logonums"><span>O</span><span>a</span><span>i</span><span>n</span><span>i</span><span>n</span></h1>
+			
+			
+		</div>
+		<div id="content"></div>
+		<div id="foot">
+			&copy;Oainin网页禁止copy
+		</div>
+		
+	</body>
+
+</html>

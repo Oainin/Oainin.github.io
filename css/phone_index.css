@@ -1,0 +1,39 @@
+* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {}
+			
+			#header {
+				height: 20vh;
+				width: 100vw;
+				background: rgba(255, 218, 185, 0.7);
+			}
+			
+			#content {
+				height: 70vh;
+				width: 100vw;
+				background: rgba(255, 239, 213, 0.5);
+				overflow-y: auto;
+				overflow-x: auto;
+			}
+			
+			#foot{
+				width: 100vw;
+				height: 10vh;
+				background: rgba(255, 218, 185, 0.7);
+			}
+			#logonums{
+				text-align: center;
+				line-height: 20vh;
+			}
+			#logonums>span{
+				
+				color: #fff;
+			}
+			#foot{
+				color: #ddd;
+				text-align: center;
+				line-height: 10vh;
+			}

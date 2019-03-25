@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Oainin上传云端</title>
+		<link rel="shortcut icon" href="img/Oainin.png" type="image/png" />
+		<link href="css/index.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/index_pad.js"></script>
+		<script type="text/javascript">
+			var H = $(window).height();
+			var W = $(window).width();
+			$(function() {
+				if($('#file').val() == '' && $('.name').val() == '') {
+					$('#submitbutton').attr("disabled", true);
+				} else {
+					$('#submitbutton').attr("disabled", false);
+				}
+				var num = 0;
+				setInterval(function() {
+					$(".colors:eq(" + num + ")").css("display", "block");
+					num++;
+					if(num > 7) {
+						num = 0;
+						$(".colors").css("display", "none");
+					}
+				}, 1000);
+
+			});
+
+			function onc() {
+				if($('#file').val() == '' && $('.name').val() == '') {
+					$('#submitbutton').attr("disabled", true);
+					$('.colors').css({
+						"background": "#f00"
+					});
+				} else {
+					$('#submitbutton').attr("disabled", false);
+					$('.colors').css({
+						"background": "#0f0"
+					});
+				}
+				var files = $('#file').val();
+				$('.name').val(files.substring(files.lastIndexOf('\\') + 1));
+				$('#key').val($('.name').val());
+			}
+			/*实时图片浏览*/
+			function showPreview(source) {
+				onc();
+				var file = source.files[0];
+				if(window.FileReader) {
+					var fr = new FileReader();
+					console.log(fr);
+					fr.onloadend = function(e) {
+						$('#filediv').css({
+							"background": "url(" + e.target.result + ")",
+							"background-size": "100% 100%"
+						});
+					};
+					fr.readAsDataURL(file);
+				}
+			}
+			/*状态动画*/
+			function textkey() {
+				$('#key').val($('.name').val());
+				if($('.name').val() == '' || $('#file').val() == '') {
+					$('#submitbutton').attr("disabled", true);
+					$('.colors').css({
+						"background": "#f00"
+					});
+				} else {
+					$('#submitbutton').attr("disabled", false);
+					$('.colors').css({
+						"background": "#0f0"
+					});
+				}
+			}
+			/*上传ajax*/
+			function up() {
+				var f = new FormData($('#forms')[0]);
+				$.ajax({
+					type: "post",
+					url: "https://upload-z2.qiniup.com/",
+					data: f,
+					async: false,
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function(returndata) {
+						$('#warning').text('上传成功');
+						$('#yin').attr("src", "music/ok.mp3");
+						$('#yin').attr("autoplay", "autoplay");
+						$('#file').val('');
+						$('.name').val('');
+						$('#filediv').css({
+							"background": "url(img/imgadd.png) no-repeat",
+							"background-size": "100% 100%"
+						});
+						$('#submitbutton').attr("disabled", false);
+					},
+					error: function(returndata) {
+						$('#warning').text('上传失败');
+						$('#yin').attr("src", "music/erro.mp3");
+						$('#yin').attr("autoplay", "autoplay");
+						$('#submitbutton').attr("disabled", false);
+					}
+				});
+				upmysqlname();
+			}
+			function upmysqlname(){
+				
+				var str='';
+				if($('#key').val()!=null){
+					str=$('#key').val();
+				}else if($('#key1').val()!=null){
+					str=$('#key1').val();
+				}else{
+					return ;
+				}
+				if($('#key').val()!=null && $('#key1').val()!=null){
+				$.ajax({
+					type:"post",
+					url:"https://oaininamos.localtunnel.me/upmusic",
+					async:true,
+					data:"musicname="+str,
+					success:function(msg){
+						
+					},
+					error:function(msg){
+						console.log(msg);
+					}
+				});
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="pc">
+			<div id="Update">
+				<h2>Oainin七牛云上传存储中心</h2>
+				<form id="forms">
+					<input name="token" type="hidden" value="NKaS_9PlBCc4vgx0ZQSH5_mkSAotYIi589VJIQBR:wTKXAs5qXTcvsR4yE5tifUJfp4g=:eyJzY29wZSI6Im9haW5pbiIsImRlYWRsaW5lIjo5OTk5OTk5OTk5fQ==">
+					<input name="key" id="key" type="hidden">
+					<table>
+						<tr>
+							<td rowspan="3" width="30%">
+								<div id="filediv"><input name="file" type="file" id="file" onchange="showPreview(this)" /></div>
+							</td>
+							<td width="10%"></td>
+							<td width="60%"></td>
+						</tr>
+						<tr>
+
+							<td>文件名：</td>
+							<td><input class="name" type="text" placeholder="输入你的文件名" onchange="textkey()"></td>
+						</tr>
+						<tr>
+							<td>检测：</td>
+							<td>
+								<div class="colors"></div>
+								<div class="colors"></div>
+								<div class="colors"></div>
+								<div class="colors"></div>
+								<div class="colors"></div>
+								<div class="colors"></div>
+								<div class="colors"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>请点击图标准备上传检测</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td id="warning"></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<audio id="yin"></audio>
+							</td>
+							<td colspan="2"><input type="button" id="submitbutton" value="提交" onclick="up()" /></td>
+
+						</tr>
+					</table>
+
+				</form>
+			</div>
+		</div>
+		<div id="pad">
+			<form id="forms" class="forms">
+				<table border="1">
+					<input name="token" type="hidden" value="NKaS_9PlBCc4vgx0ZQSH5_mkSAotYIi589VJIQBR:IWYoMk20ChYqizVLmagSUAlzqfk=:eyJzY29wZSI6Im9haW5pbiIsImRlYWRsaW5lIjoyNTIxMTMyMzkxfQ==">
+					<input name="key" id="key1" class="key1" type="hidden">
+					<tr>
+						<td id="biao" colspan="2"><img src="http://stroage.oainin.com/Oainin.png" />Oainin上传七牛云</td>
+					</tr>
+					<tr>
+						<td>头像浏览</td>
+						<td>
+							<div id="filediv1"><input name="file" type="file" id="file1" onchange="showPreview1(this)" /></div>
+						</td>
+					</tr>
+					<tr>
+						<td>文件名</td>
+						<td><input class="name1" type="text" placeholder="输入你的文件名" onchange="textkey1()"></td>
+					</tr>
+					<tr>
+						<td>上传状态</td>
+						<td>
+							<div class="colors1"></div>
+							<div class="colors1"></div>
+							<div class="colors1"></div>
+							<div class="colors1"></div>
+							<div class="colors1"></div>
+							<div class="colors1"></div>
+							<div class="colors1"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>状态</td>
+						<td id="warning1"></td>
+					</tr>
+					<tr>
+						<td>上传选项</td>
+						<td><input type="button" id="submitbutton1" value="提交" onclick="up1()" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+
+</html>

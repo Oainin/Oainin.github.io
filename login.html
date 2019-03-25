@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				width: 100vw;
+				height: 100vh;
+				overflow: hidden;
+			}
+			
+			#regdiv {
+				width: 50vw;
+				height: 90vh;
+				border: 10px groove #aaa;
+				margin: 5vh auto;
+				border-radius: 10px;
+			}
+			
+			#reg table {
+				margin-top: 10px;
+				text-align: center;
+				margin: 0 auto;
+			}
+			
+			#reg table td {
+				line-height: 27px;
+			}
+			
+			.ern {
+				color: red;
+				padding-top: 10px;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script>
+			$(function() {
+				var strurl = window.location.search;
+				var username = strurl.substring(strurl.indexOf('=') + 1, strurl.indexOf('&password'));
+				var password = strurl.substring(strurl.indexOf('d=') + 2);
+				//alert(password);
+				$('.username').val(username);
+				$('.password').val(password);
+			});
+
+			function login() {
+				$('.username').val('');
+				$('.password').val('');
+				$('.dpassword').val('');
+
+			}
+
+			function login_link() {
+
+				$.ajax({
+					url: "http://io.oainin.com/loginDo",
+					data: "username=" + $('.username').val() + "&password=" + $('.password').val(),
+					type: "get",
+					success: function(e) {
+						if(e[0].username != null) {
+							$('.ern').text('pass:登录成功！');
+							$('.ern').css("color", "green");
+							window.location.href = "index.html?username=" + $('.username').val() + "&password=" + $('.password').val();
+
+						} else {
+							$('.password').val('');
+							$('.ern').text('error:密码或账号不匹配！');
+						}
+
+						console.log(e);
+
+					}
+				});
+
+			}
+		</script>
+	</head>
+
+	<body>
+
+		<div id="regdiv"><img style="margin: 20px 20px;" src="img/Oainin.png" /><span style="font-size: 25px;font-family: '楷体';">登陆页面</span>
+			<div id="reg" style="width: 30vw;height: auto;text-align: center;margin: 20px auto;">
+				<table>
+					<tr>
+						<td>账号：</td>
+						<td><input type="text" class="username" /></td>
+					</tr>
+					<tr>
+						<td>密码：</td>
+						<td><input type="password" class="password" /></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" class="ern"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="padding-top: 30px;"><input onclick="login_link()" style="width: 5vw;height: 30px;" type="button" value="登陆" />&nbsp;&nbsp;&nbsp;<input style="width: 5vw;height: 30px;" type="button" value="重置" onclick="login()" /></td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</body>
+
+</html>

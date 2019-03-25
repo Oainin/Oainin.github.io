@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Oainin哦爱您</title>
+<link rel="shortcut icon" href="img/Oainin.png"
+	type=" image/png" />
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#nav {
+	width: 50%;
+	height: 100%;
+	margin: 0 auto;
+}
+
+#nav li {
+	float: left;
+	width: 20%;
+	text-align: center;
+	list-style: none;
+	cursor: pointer;
+	color: #eee;
+}
+
+#nav li a {
+	text-decoration: none;
+	color: #eee;
+}
+
+#nav li a:hover {
+	color: #fff;
+}
+
+#nav li:hover {
+	color: #fff;
+}
+
+body {
+	
+}
+
+#foot a {
+	color: #fff;
+	text-decoration: none;
+}
+
+#searchdiv {
+	width: 80%;
+	margin: 100px auto;
+	height: 200px;
+	border-radius: 10px;
+}
+
+#searchcontent {
+	width: 70%;
+	height: 70px;
+	line-height: 70px;
+	font-size: 40px;
+	vertical-align: bottom;
+	background-color: transparent;
+	border: none;
+	border-bottom: 2px solid #bbb;
+	outline: none;
+	font-family: "宋体";
+	color: #fff;
+}
+
+#searchtop {
+	width: 90%;
+	height: 78px;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 60px;
+}
+
+#searchbutton {
+	width: 20%;
+	height: 74px;
+	line-height: 70px;
+	font-size: 60px;
+	display: inline;
+	cursor: pointer;
+	color: #aaa;
+	background-color: #fff;
+	border-radius: 50px;
+	margin-left: 10px;
+	font-family: "宋体";
+}
+
+#sousuochoose {
+	color: #fff;
+}
+
+#searchbutton:hover {
+	color: transparent;
+}
+
+#sousuochoose {
+	width: 40%;
+	margin: 0 auto;
+	margin-top: 30px;
+}
+</style>
+<script type="text/javascript" src='js/jquery-3.2.1.min.js'></script>
+<script type="text/javascript">
+var H = $(window).height();
+var W = $(window).width();
+$(function() {
+	$('body').css({
+		
+		"background":"#66ccff",
+	"height":H+"px"
+	});
+	$('#header').css({
+		"width" : W + "px",
+		"height" : H / 14 + "px",
+		"display" : "none",
+		"opacity" : "0.3"
+	});	
+	$('#headercontent').css({
+		"width" : W + "px",
+		"height" : H / 14 + "px",
+		"display" : "none",
+		"position" : "absolute",
+		left : "0",
+		top : "0"
+
+	});
+	$('#foot').css({
+		"width" : W + "px",
+		"height" : H / 6 + "px"
+		
+	});
+	$('#centercontent').css({
+		"width" : W + "px",
+		"height" : H-H/14+"px",
+		"background":"rgba(255,255,255,0.7)",
+		"display":"none"
+	});
+	$('#content').css({
+		"width" : W + "px",
+		"height" : H/3+"px",
+		"display":"none",
+		"float":"left"
+		//"background":"linear-gradient(#eee, #66ccff)"
+	});
+	$('#borders').css({
+		"height":H-(H/3+H/14)+"px",
+		"width":W+"px"
+		
+	});
+	$('#nav').css("line-height", H / 14 + "px");
+	$("#header,#headercontent").slideDown(2000);
+	ajaxtest();
+	$('#content').slideDown(2000,function(){
+	});
+	$('#phone').click(function () {
+		var x=H-H/14-H/6;
+		$('#borders').slideUp();
+		$('#content').slideUp();
+		$('#centercontent').css("height",x+"px");
+		$('#centercontent').slideDown();
+	});
+	$('#searchbutton').click(function () {
+		var urlsearch=['https://www.baidu.com/s?wd=','https://www.sogou.com/web?query=','https://www.so.com/s?ie=utf-8&fr=none&src=360sou_newhome&q=','https://so.m.sm.cn/s?q=','https://cn.bing.com/search?q='];
+		for (var i = 0; i < urlsearch.length; i++) {
+			  var s = document.getElementsByName("s");  
+			if(s[i].checked){
+				window.open(urlsearch[i]+$('#searchcontent').val());
+			}
+		}
+		$('#searchcontent').val('');
+	});
+	
+		var onum = 0;
+	setInterval(function() {
+		var snum1 = Math.floor(Math.random() * 255);
+		var snum2 = Math.floor(Math.random() * 255);
+		var snum3 = Math.floor(Math.random() * 255);
+		if(onum > 5) {
+			onum = 0;
+		}
+		$('body').css('background', 'rgb(' + snum1 + ',' + snum2 + ',' + snum3 + ')');
+		onum++;
+	}, 10000);
+});
+function ajaxtest() {
+	$.ajax({
+		url:"/search/test",
+		data:"",
+		type:"post",
+		success:function(msg){
+			//window.open("");
+			//$('#searchdiv').html(msg);
+           
+		}
+	});
+}
+document.onkeydown=function(event){
+	              var e = event || window.event || arguments.callee.caller.arguments[0];
+	             if(e && e.keyCode==27){ // 按 Esc 
+	            	 var opened=window.open('about:blank','_self'); opened.opener=null; opened.close();
+	               }
+	             if(e && e.keyCode==117){ // 按 F6
+	                  //要做的事情
+	               }            
+	              if(e && e.keyCode==13){ // enter 键
+	            	  var urlsearch=['https://www.baidu.com/s?wd=','https://www.sogou.com/web?query=','https://www.so.com/s?ie=utf-8&fr=none&src=360sou_newhome&q=','https://so.m.sm.cn/s?q=','https://cn.bing.com/search?q='];
+	          		for (var i = 0; i < urlsearch.length; i++) {
+	          			  var s = document.getElementsByName("s");  
+	          			if(s[i].checked){
+	          				window.open(urlsearch[i]+$('#searchcontent').val());
+	          			}
+	          		}
+	        		$('#searchcontent').val('');
+	             }
+	        }; 
+</script>
+</head>
+<body>
+	<div id='header'></div>
+	<div id="headercontent">
+		<ul id="nav">
+			<li><a href="application.html">网站简介</a></li>
+			<li><a href="seach.html">网页导航</a></li>
+			<li><a href="index.html">Oainin</a></li>
+			<li><a href="http://blog.oainin.com">我的博客</a></li>
+			<li id="phone">联系我们</li>
+		</ul>
+	</div>
+	<div id="content">
+		<div id="searchdiv">
+			<div id="searchtop">
+				<input type="text"  id="searchcontent" autofocus="autofocus"
+					placeholder='请输入你要搜索的内容'>
+				<div id="searchbutton">哦</div>
+			</div>
+			<div id="sousuochoose">
+
+				<input type="radio" name="s" id="s" value="s1" checked="checked">百度
+				<input type="radio" name="s" id="s" value="s2">搜狗 <input
+					type="radio" name="s" id="s" value="s3">360 <input
+					type="radio" name="s" id="s" value="s4">UC <input
+					type="radio" name="s" id="s" value="s5">Bing
+
+			</div>
+		</div>
+	</div>
+
+	<div id="centercontent">
+		<h1>
+			<img src="img/Oainin.png" />联系我们
+		</h1>
+		<p
+			style="width: 40%; padding-top: 30px; margin: 0 auto; line-height: 30px;">
+			网站追求极致，期待你的建议<br> 联系我们的邮件：<a
+				href="Mailto:in@oainin.com?CC=in@oainin.com&BCC=in@oainin.com&Subject=来自Oainin主网页的问题&Body=请在这里输入你遇到的问题">in@oainin.com</a><br>
+			或者请到我的博客留言<a href="http://www.aimishiyou.top">Amos博客</a><br> <img
+				alt="" src="img/erweima.png" width="80" height="80">
+		</p>
+	</div>
+	<div id="borders"></div>
+	<div id='foot'>
+		<p
+			style="color: #fff; text-align: center; padding-top: 10px; line-height: 24px;">
+			本网站内容属于Oainin.com&copy;Copyright版权所有，禁止转载，谢谢！2017-2018<br> <a
+				href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51132102000140'><img
+				alt="备案图标" src="img/ba.png">川公网安备 51132102000140号</a><br> <a
+				href="http://www.miitbeian.gov.cn/">蜀ICP备17036264号-2</a>
+		</p>
+	</div>
+</body>
+</html>

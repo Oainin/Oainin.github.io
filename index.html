@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>Oainin哦爱您</title>
+		<!--状态栏图标设置-->
+		<link rel="shortcut icon" href="img/Oainin.png" type=" image/png" />
+		<!--css文件引入-->
+		<link href="css/pc_index.css" rel="stylesheet" type="text/css" />
+		<!--bootstrap_css引入-->
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<!--jqurey库引入-->
+		<script type="text/javascript" src='js/jquery-3.2.1.min.js'></script>
+		<!--bootstrap_js引入-->
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<!--仿真书js-->
+		<script type="text/javascript" src="js/qrcode.min.js"></script>
+		<!--工具js引入-->
+		<script type="text/javascript" src="js/until.js"></script>
+		<!--语音js引入-->
+		<script type="text/javascript" src="js/jQuery.speech.min.js"></script>
+		<!--时间转换引入-->
+		<script type="text/javascript" src="js/timetotime.js"></script>
+
+		<script src='https://cdn.bootcss.com/flv.js/1.4.0/flv.min.js'></script>
+		<script type="text/javascript" charset="utf-8" src="http://connect.qq.com/qc_jssdk.js" data-appid="101503786" data-redirecturi="https://oainin.com/index.html"></script>
+
+		<script type="text/javascript" src="//connect.qq.com/qc_jssdk.js" charset="utf-8" data-callback="true"></script>
+		<script type="text/javascript">
+			/*禁止ie访问*/
+			/*	if(!+[1, ]) {
+					window.opener = null;
+					window.open('404.md', '_self');
+					setTimeout(function() {
+						window.close();
+					}, 3000);
+				}*/
+			/*获取窗体大小*/
+			var H = $(window).height();
+			var W = $(window).width();
+			var img6 = [],
+				flag2 = 0;
+			/*获取时间*/
+			var now = new Date();
+			/*获取当前阴历*/
+			var lnow = calendar.solar2lunar(now.getFullYear(), now.getMonth() + 1, now.getDate());
+			/*图片数组*/
+			var s = ['https://api.i-meto.com/bing?new&blur',
+				'http://stroage.oainin.com/IMG_0065.JPG',
+				'http://stroage.oainin.com/IMG_1387.JPG'
+			];
+			var imgtotal = s.length;
+
+			var num = 0;
+			var num1 = 0;
+
+			/*判断窗体预加载js文件*/
+			if(W >= 1024) {
+				document.write('<script type="text/javascript" src="js/index_pc.js"><\/script>');
+
+			} else if(1024 > W || W > 480) {
+				document.write('<script type="text/javascript" src="js/phone_url.js"><\/script>');
+
+			}
+		</script>
+	</head>
+
+	<body oncontextmenu="self.event.returnValue=false" onselectstart="return ">
+
+		<!--pc端访问显示div-->
+		<div id="pc">
+			<div id="oaininzemu">
+				<p class="oainin_zemu_p"><span>x</span></p>
+				<div></div>
+			</div>
+			<div id="r_m">
+				<span style="text-align: center;border-bottom: 5px solid;width: 100%;display: block;">右键菜单</span>
+				<ul>
+					<li onclick="regoainin()">注册</li>
+					<li onclick="loginoainin()">登录</li>
+				</ul>
+
+			</div>
+			<div id="pcbody">
+				<div id="loginorreg">
+					<div class="L_O_R_L">
+						<span id="qqLoginBtn"></span>
+						<script type="text/javascript">
+							//调用QC.Login方法，指定btnId参数将按钮绑定在容器节点中
+							QC.Login({
+								//btnId：插入按钮的节点id，必选
+								btnId: "qqLoginBtn",
+								//用户需要确认的scope授权项，可选，默认all
+								scope: "all",
+								//按钮尺寸，可用值[A_XL| A_L| A_M| A_S|  B_M| B_S| C_S]，可选，默认B_S
+								size: "A_L"
+							}, function(reqData, opts) { //登录成功
+								//根据返回数据，更换按钮显示状态方法
+								
+								var dom = document.getElementById(opts['btnId']),
+									_logoutTemplate = [
+										//头像
+										'<span><img src="{figureurl}" class="{size_key}"/></span>',
+										//昵称
+										'<span>{nickname}</span>',
+										//退出
+										'<span><a href="javascript:QC.Login.signOut();">退出</a></span>'
+									].join("");
+								dom && (dom.innerHTML = QC.String.format(_logoutTemplate, {
+									nickname: QC.String.escHTML(reqData.nickname), //做xss过滤
+									figureurl: reqData.figureurl
+								}));
+							}, function(opts) { //注销成功
+								alert('QQ登录 注销成功');
+							});
+						</script>
+					</div>
+					<div class="L_O_R_C"><img src="img/Oaininlove.png"><!--<span>只为更好的您，所以等待！</span>--></div>
+					<div class="L_O_R_R">
+						<p>用户名：<input type="text" name="username" class="username">&nbsp;<input type="button" value="注册" onclick="regoainin()" /><br /> 密码哦：
+							<input type="password" name="password" class="password" />&nbsp;<input type="button" onclick="loginoainin()" value="登录" /><br />
+
+						</p>
+					</div>
+				</div>
+				<div id='header'>
+					<ul id="nav">
+						<li>
+							<a href="application.html">网站信息</a>
+						</li>
+						<li>
+							<a href="photos.html">相册</a>
+						</li>
+						<li>
+							<a href="index.html">Oainin</a>
+						</li>
+						<li>
+							<a href="http://blog.oainin.com">空间</a>
+						</li>
+						<li id="phone">
+							<a href="#">联系我们</a>
+						</li>
+
+					</ul>
+				</div>
+				<div id="centercontent">
+					<h1> <img src="img/Oainin.png" />联系我们
+		</h1>
+					<p>
+						网站追求极致，期待你的建议<br> 联系我们的邮件：
+						<a href="Mailto:in@oainin.com?CC=in@oainin.com&BCC=in@oainin.com&Subject=来自Oainin主网页的问题&Body=请在这里输入你遇到的问题">in@oainin.com</a><br> 或者请到我的博客留言
+						<a href="http://www.aimishiyou.top">Amos博客</a><br>
+						<img alt="" src="img/erweima.png" width="80" height="80">
+					</p>
+				</div>
+				<div id='content'>
+					<div id="topcontent">
+						<img id="logoleft" src="img/IMG_2216.JPG" data-src="img/IMG_2216_min.JPG">
+						<img id="logoright" src="">
+					</div>
+					<div id="toptop">
+						<div id="lefttop">
+							<img src="img/3dOainin.png" width="158.9" height="158.9" id="comlogo" height="50%">
+						</div>
+						<div id="righttop">
+							<h2>网站介绍</h2>
+							<p id="contoptext"></p>
+						</div>
+						<div id="loveloding">
+							<table style="width: 100vw;height: 100px;">
+								<tr height="25px">
+									<td width="10vw" rowspan="4"><img src="img/IMG_2256.JPG" width="100" height="100" class="img-circle"></td>
+									<td rowspan="2" colspan="5" width="80vw" height="50px">
+										<div class="progress" style="margin-top: 20px;">
+											<div class="progress progress-striped active">
+												<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
+													<span class="sr-only">20% 完成（警告）</span>
+												</div>
+												<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
+													<span class="sr-only">40% 完成</span>
+												</div>
+												<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+													<span class="sr-only">30% 完成（信息）</span>
+												</div>
+												<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+													<span class="sr-only">20% 完成（警告）</span>
+												</div>
+											</div>
+										</div>
+									</td>
+
+									<td rowspan="4" width="10vw"><img src="http://stroage.oainin.com/timg.gif" width="100" height="100" class="img-circle"></td>
+
+
+								</tr>
+								<tr height="25px">
+
+								</tr>
+								<tr>
+									<td style="color: red;">初拾</td>
+									<td style="color: yellow;">密约</td>
+									<td style="color: orange;">热火</td>
+									<td style="color: green;">倾心</td>
+									<td style="color: green;">达成</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+
+						</div>
+					</div>
+					<div id="centercontent1">
+						<h1 id="logonums"><span>O</span><span>a</span><span>i</span><span>n</span><span>i</span><span>n</span></h1>
+					</div>
+					<div id="bottomcontent">
+						<div id="rightbottom">
+							<p id="conbottext"></p>
+							<div class='alert alert-warning alert-dismissable' id="wornning" style='width:95%; margin: 0 auto;'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>视频数据采集中</div>
+						</div>
+						<div id="leftbottom">
+							<div class="message2">
+								<div class="message2_1">
+									<h2 style="padding: 10px 10px;font-family: '仿宋';">网站:</h2>
+									<p style="text-indent: 28px;font-size: 14px;">Oainin网站由杨正龙开发，为心之所向而建站，欢迎你的访问！</p>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="centercontent2">
+						<p style="text-align:center;line-height: 100px;"><img src="img/3dOainin.png" height="80%" width="200" class="centercontent2img" /></p>
+
+					</div>
+					<!-- 视频提示信息 -->
+					<div id="bottomcontent2">
+						<h1 style="text-align: center;line-height: 100vh;color:#999;">视频正在采集中</h1>
+					</div>
+				</div>
+				<!-- oaininPC底部备案 -->
+				<div id='foot'>
+					<p style="color: #fff; text-align: center; padding-top: 10px; line-height: 24px;">
+						本网站内容属于Oainin.com&copy;Copyright版权所有，禁止转载，谢谢！2017-2019<br>
+						<a href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51132102000140'><img alt="" src="img/ba.png">川公网安备 51132102000140号</a><br>
+						<a href="http://www.miitbeian.gov.cn/">蜀ICP备18034157号</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<!-- oaininPC加载代码 -->
+		<div id="zemu">
+			<div class="progress progress-striped active">
+				<div id="zemujindu" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+					<span class="sr-only">加载中。。。(第一次加载)</span>
+				</div>
+			</div>
+			<div id="welcome">
+				<p>Oainin网页加载中稍后</p>
+				<p><img class="media-object" src="img/Oainin.png" alt="通用的占位符图像"></p>
+
+			</div>
+		</div>
+	
+		</div>
+		<!-- 如下script为百度站长提交 -->
+		<script>
+			(function() {
+				var bp = document.createElement('script');
+				var curProtocol = window.location.protocol.split(':')[0];
+				if(curProtocol === 'https') {
+					bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+				} else {
+					bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+				}
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(bp, s);
+			})();
+		</script>
+	</body>
+
+</html>

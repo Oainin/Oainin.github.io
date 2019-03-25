@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+				.webreturn{
+				border: 2px solid;
+				background: rgba(0,0,0,0.5);
+				width: 10vw;
+				position: absolute;
+				text-align: center;
+				top: 0;
+				left: 0;
+				cursor: pointer;
+				border-radius: 3px;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js" ></script>
+		<script>
+			function ifrreturn(){
+				parent.location.href='p_memu.html';
+			}
+		</script>
+	</head>
+	<body>
+		<p class="webreturn" onclick="ifrreturn()"><<</p>
+	</body>
+</html>

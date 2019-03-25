@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Oainin哦爱您</title>
+		<link rel="shortcut icon" href="img/Oainin.png" type=" image/png" />
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				font-size: 12px;
+			}
+			
+			#nav {
+				width: 50%;
+				height: 100%;
+				margin: 0 auto;
+			}
+			
+			#nav li {
+				float: left;
+				width: 20%;
+				text-align: center;
+				list-style: none;
+				cursor: pointer;
+				color: #eee;
+			}
+			
+			#nav li a {
+				text-decoration: none;
+				color: #eee;
+			}
+			
+			#nav li a:hover {
+				color: #fff;
+				display: block;
+				background: #999;
+			}
+			
+			#nav li:hover {
+				color: #fff;
+			}
+			
+			body {}
+			
+			#foot a {
+				color: #fff;
+				text-decoration: none;
+			}
+			
+			#appback {
+				width: 100vw;
+				height: 1000vh;
+				background-color: rgba(255, 255, 255, 0.9);
+				position: absolute;
+				left: 0;
+				top: 0;
+				display: none;
+			}
+			#apppage{
+				width: 100vw;
+				height: 100vw;
+				background: rgba(0,0,0,0,0.5);
+				display: none;
+			}
+			#addapp {
+				width: 500px;
+				height: 300px;
+				background-color: rgba(100, 100, 100, 0.5);
+				margin: 200px auto;
+				border-radius: 20px;
+			}
+			
+			#addappbutton {
+				margin-left: 30px;
+				width: 120px;
+				height: 160px;
+				display: inline-block;
+			}
+			
+			#addapp table {
+				width: 100%;
+				height: 100%;
+				font-size: 20px;
+			}
+			
+			#addapp table td {
+				text-align: center;
+			}
+			
+			#adds {
+				width: 100px;
+				height: 30px;
+			}
+			
+			#cacenl {
+				width: 100px;
+				height: 30px;
+				margin-left: 50px;
+			}
+			
+			.texts {
+				width: 90%;
+				height: 100%;
+				background: transparent;
+				outline: none;
+				font-size: 50px;
+				border: none;
+				border-bottom: 3px solid;
+			}
+			
+			#content div img {
+				width: 100px;
+				height: 140px;
+				text-align: center;
+				padding: 10px;
+			}
+			
+			#content div {
+				width: 120px;
+				height: 172px;
+				float: left;
+				margin-left: 15px;
+				cursor: pointer;
+			}
+			#content div span{
+				width: 120px;
+				height: auto;
+				text-align: center;
+				display: inline-block;
+			}
+			#content div a{
+				text-decoration: none;
+				color: #000;
+			}
+			.closeapppage{
+				width: 100%;
+				height: auto;
+		        text-align: left;
+		        padding-left: 30px;
+		        font-size: 20px;
+		        cursor: pointer;
+		        background: rgba(255,255,255,0.7);
+			}
+			#apppage{
+				 background: rgba(255,255,255,0.7);
+			}
+			#url_app{
+				border: none;
+			}
+		</style>
+		<script type="text/javascript" src='js/jquery-3.2.1.min.js'></script>
+		<script type="text/javascript">
+			var H = $(window).height();
+			var W = $(window).width();
+			var stroage = window.localStorage;
+			$(function() {
+				$('body').css({
+
+					"background":"#66ccff",
+					"height": H + "px"
+				});
+				$('#header').css({
+					"width": W + "px",
+					"height": H / 14 + "px",
+					"display": "none",
+					"opacity": "0.3"
+				});
+				$('#headercontent').css({
+					"width": W + "px",
+					"height": H / 14 + "px",
+					"display": "none",
+					"position": "absolute",
+					"border-bottom":"2px solid #eee",
+					left: "0",
+					top: "0"
+
+				});
+				$('#foot').css({
+					"width": W + "px",
+					"height": H / 6 + "px",
+					"margin-top":10 + "px"
+				});
+				$('#centercontent').css({
+					"width": W + "px",
+					"height": H - H / 14 + "px",
+					"background": "rgba(255,255,255,0.7)",
+					"display": "none"
+				});
+				$('#content').css({
+					"width": "100vw",
+					"height": H - (H / 6 + H / 14) + "px",
+					"margin-top": "100px"
+				});
+				$('#apppage').css({
+					"height": H - (H / 6 + H / 14) + "px"
+				});
+				$('#nav').css("line-height", H / 14 + "px");
+				$("#header,#headercontent").slideDown(2000);
+				$('#phone').click(function() {
+					var x = H - H / 14 - H / 6;
+					$('#content').slideUp();
+					$('#centercontent').css("height", x + "px");
+					$('#centercontent').slideDown();
+				});
+
+				$('#addappbutton').click(function() {
+					$('#appback').slideDown(1000);
+				});
+				$('#cacenl').click(function() {
+					$('#appback').slideUp();
+					$('#apppage').slideUp();
+					$('#content').slideDown();
+				});
+				
+				showStorage();
+				//localStorage.removeItem("百度一下"); //清除c的值  
+				$('.closeapppage').click(function(){
+					$('#apppage').slideUp();
+					$('#content').slideDown();
+				});
+				var onum = 0;
+	setInterval(function() {
+		var snum1 = Math.floor(Math.random() * 255);
+		var snum2 = Math.floor(Math.random() * 255);
+		var snum3 = Math.floor(Math.random() * 255);
+		if(onum > 5) {
+			onum = 0;
+		}
+		$('body').css('background', 'rgb(' + snum1 + ',' + snum2 + ',' + snum3 + ')');
+		onum++;
+	}, 10000);
+			});
+
+			function showStorage() {
+				for(var i = 0; i < stroage.length; i++) {
+					//key(i)获得相应的键，再用getItem()方法获得对应的值  
+					console.log(stroage.key(i) + " : " + stroage.getItem(stroage.key(i)));
+					$('#content').html($('#content').html() + "<div urls="+stroage.getItem(stroage.key(i))+"><img width='100' height='140' src='img/IMG_2216.JPG' style='border-radius: 10px;'><br><span style='text-align: center;'>" + stroage.key(i) + "</span></div>");
+					
+					$('#addappbutton').click(function() {
+						$('#appback').slideDown(1000);
+					});
+					
+				}
+				for (var x=0;x<$('#content div').length;x++) {
+					$('#content div:eq('+x+')').click(function(){
+						$('#url_app').attr('src',$(this).attr('urls'));
+						$('#apppage').css({
+							"background":"rgba(255,255,255,0.7)"
+						});
+						$('#content').slideUp();
+						$('#apppage').slideDown();
+					});
+				}
+			}
+
+			function addpp() {
+				localStorage.setItem($('#appname').val(), $('#appurl').val());
+				$('#appback').slideUp();
+				window.location.reload();
+			}
+		</script>
+	</head>
+
+	<body>
+
+		<div id='header'></div>
+		<div id="headercontent">
+			<ul id="nav">
+				<li>
+					<a href="application.html">网站应用</a>
+				</li>
+				<li>
+					<a href="seach.html">网页导航</a>
+				</li>
+				<li>
+					<a href="index.html">Oainin</a>
+				</li>
+				<li>
+					<a href="http://blog.oainin.com">我的博客</a>
+				</li>
+				<li id="phone"><a href="#">联系我们</a></li>
+			</ul>
+		</div>
+
+		<div id="appback">
+			<div id="addapp">
+				<table>
+					<tr>
+						<td colspan="2">
+							<h1>APP应用添加</h1></td>
+					</tr>
+					<tr>
+						<td width="30%">应用名称</td>
+						<td width="70%"><input type="text" id="appname" class="texts"></td>
+					</tr>
+					<tr>
+						<td>应用地址</td>
+						<td><input type="text" id="appurl" class="texts"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="height: 100px;"><input type="button" onclick="addpp()" value="添加" id="adds"><input type="button" value="取消" id="cacenl"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="centercontent">
+			<h1>
+			<img src="img/Oainin.png" />联系我们
+		</h1>
+			<p style="width: 40%; padding-top: 30px; margin: 0 auto; line-height: 30px;">
+				网站追求极致，期待你的建议<br> 联系我们的邮件：
+				<a href="Mailto:in@oainin.com?CC=in@oainin.com&BCC=in@oainin.com&Subject=来自Oainin主网页的问题&Body=请在这里输入你遇到的问题">in@oainin.com</a><br> 或者请到我的博客留言
+				<a href="http://www.aimishiyou.top">Amos博客</a><br> <img alt="" src="img/erweima.png" width="80" height="80">
+			</p>
+		</div>
+		<div id="content">
+			<div id="addappbutton"><img src="img/imgadd.png"><br><span style="text-align: center;">添加应用</span></div>
+		</div>
+		<div id="apppage">
+			<p class="closeapppage">x</p>
+			<iframe width="100%" height="100%" id="url_app"></iframe>
+		</div>
+		<div id='foot'>
+			<p style="color: #fff; text-align: center; padding-top: 10px; line-height: 24px;">
+				本网站内容属于Oainin.com&copy;Copyright版权所有，禁止转载，谢谢！2017-2018<br>
+				<a href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51132102000140'><img alt="备案图标" src="img/ba.png">川公网安备 51132102000140号</a><br>
+				<a href="http://www.miitbeian.gov.cn/">蜀ICP备17036264号-2</a>
+			</p>
+		</div>
+		<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+	</body>
+
+</html>

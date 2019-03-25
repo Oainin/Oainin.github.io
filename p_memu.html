@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {}
+			
+			#header {
+				height: 30vh;
+				width: 100vw;
+				background: rgba(255, 218, 185, 0.7);
+			}
+			
+			#content {
+				height: 60vh;
+				width: 100vw;
+				background: rgba(255, 239, 213, 0.5);
+				overflow-y: auto;
+				overflow-x: auto;
+			}
+			
+			#foot{
+				width: 100vw;
+				height: 10vh;
+				background: rgba(255, 218, 185, 0.7);
+			}
+			
+			#head {
+				width: 40vw;
+				height: 30vh;
+				float: left;
+				text-align: center;
+				line-height: 10vh;
+			}
+			
+			#message {
+				display: inline-block;
+				height: 30vh;
+				width: 60vw;
+			}
+			
+			#head img {
+				width: 50%;
+				height: 50%;
+				margin-top: 7vh;
+				border-radius: 10px;
+				border: 2vh double #66ccff;
+			}
+			
+			.times {
+				line-height: 10vh;
+				margin-left: 5vw;
+				color: #fff;
+			}
+			
+			.user {
+				margin-top: 8vh;
+				cursor: pointer;
+			}
+			
+			.cacenluser {
+				margin-top: 5vh;
+				border: 2px solid #fff;
+				width: 15vw;
+				text-align: center;
+				border-radius: 2vw;
+				color: #fff;
+			}
+			
+			#content table {
+				width: 100%;
+				height: auto;
+			}
+			
+			#content table td {
+				height: 10vh;
+				border-bottom: 2px solid rgba(255, 218, 185, 0.7);
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script>
+			var LINKS = "http://io.oainin.com/";
+
+			$(function() {
+				loginover();
+				var timer=setInterval(function() {
+					var time = new Date();
+					$('.times').text("当前时间"+time.toLocaleString());
+				}, 1000);
+				reqlist();
+			});
+
+			function twonum(a) {
+				if(a < 10) {
+					a = '0' + a;
+				}
+				return a;
+			}
+
+			function loginover() {
+				$.ajax({
+					type: "get",
+					url: LINKS + "loginOver",
+					dataType: "json",
+					xhrFields: {
+						withCredentials: true
+					},
+					async: true,
+					success: function(msg) {
+						//console.log(msg);
+						console.log(msg);
+						if(msg[0] != null) {
+							$('.user').html(msg[0].username);
+						}
+						if(false){
+							window.location.href = "phone.html";
+						}
+					}
+				});
+			}
+
+			function sessionUser() {
+				$.ajax({
+					type: "get",
+					url: LINKS + "sessionover",
+					dataType: "json",
+					xhrFields: {
+						withCredentials: true
+					},
+					async: true,
+					success: function(msg) {
+						if(!msg) {
+							window.location.href = "phone.html";
+
+						}
+					}
+				});
+			}
+			function reqlist(){
+				$.ajax({
+					type:"get",
+					url:LINKS+"applist",
+					async:true,
+					success:function(msg){
+						//alert(msg);
+						if(msg!=null){
+							$('.appslist').html(msg.list);
+						}
+						
+					},
+					error:function(msg){
+						console.log(1);
+						$('.appslist').html("<tr><td style='text-align: center;color: red;'>服务器中断，稍后 ！</td></tr>");
+					}
+				});
+			}
+			function p_user(){
+				window.location.href="p_user.html";
+			}
+		</script>
+	</head>
+
+	<body>
+			<div id="header">
+				<div id="head"><img onerror="this.src='http://stroage.oainin.com/7.jpg'" src="http://stroage.oainin.com/7.jpg" /></div>
+				<div id="message">
+					
+					<p class="user" onclick="p_user()"></p>
+					<p class="cacenluser" style='cursor: pointer;margin-right: 2vw;' onclick='sessionUser()' href='#'>注销</p>
+				</div>
+			</div>
+			<div id="content">
+				<table  class="appslist">
+				
+				</table>
+
+			</div>
+			<div id="foot">
+				<p class="times"></p>
+			</div>
+	</body>
+
+</html>

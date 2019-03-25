@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>数据情况获取</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				color: greenyellow;
+			}
+			
+			body {
+				width: 100vw;
+				height: 100vh;
+				background: #000000;
+			}
+			
+			h2 {
+				text-align: center;
+			}
+			
+			#Content {
+				width: 95vw;
+				height: 90vh;
+				margin: 0 auto;
+			}
+			
+			#Content div {
+				width: 49%;
+				height: 100%;
+				float: left;
+				margin: 0 auto;
+				border: 1px solid greenyellow;
+			}
+			
+			.consolemessage {
+				outline: none;
+			}
+			
+			.leftc ol {
+				padding: 40px 40px;
+				line-height: 30px;
+				width: 40%;
+				float: left;
+			}
+			
+			.leftc ul {
+				width: 42%;
+				float: left;
+				padding-left: 30px;
+				padding-top: 40px;
+				line-height: 30px;
+			}
+			
+			.leftc ol li {
+				cursor: pointer;
+			}
+			
+			.leftc ul li {
+				cursor: pointer;
+			}
+			
+			.leftc ol li:hover {
+				background: #333;
+			}
+			
+			.leftc ul li:hover {
+				background: #333;
+			}
+			
+			#flu {
+				position: absolute;
+				top: 50vh;
+				right: 10px;
+				border: 2px solid;
+				border-radius: 10px;
+				cursor: pointer;
+			}
+			
+			.consolemessage {
+				width: 100%;
+				height: 100%;
+				background: transparent;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/ping.js"></script>
+		<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+		<script>
+			var lastLog;
+			console.oldLog = console.log;
+			console.log = function(str) {
+				console.oldLog(str);
+				lastLog = str;
+			}
+			$(function() {
+
+				$('#flu').click(function() {
+					window.location.href = "Code.html";
+
+				});
+			})
+
+			function comess(s) {
+				var times = new Date();
+				//times.toLocaleString()
+				console.log(" IP:" + returnCitySN["cip"] + " " + returnCitySN["cname"] + "  " + s);
+				$('.consolemessage').html("  " + lastLog + "\n" + $('.consolemessage').text());
+			}
+
+			function urladd() {
+				$('.leftc ul').css("display", "block");
+				$('.leftc ul').html("<li>http://oainin.com</li><li>http://blog.oainin.com</li><li>http://video.oainin.com</li><li>http://io.oainin.com</li>");
+				$('.leftc ul li').click(function() {
+
+					urlping($(this).text());
+					comess("当前正在进行" + $(this).text() + "访问！")
+				});
+			}
+
+			function urlping(a) {
+
+				$.ajax({
+					type: "get",
+					url: a + "/favicon.ico",
+					async: true,
+					success: function(msg) {
+						comess(a + "已连通！");
+					},
+					error: function(msg) {
+						comess(a + "无法连通！");
+					}
+				});
+
+			}
+			function serverping(a){
+				$.ajax({
+					type:"get",
+					url:a+"/text",
+					async:true,
+					success:function(msg){
+						alert("cheng");
+					},
+					error:function(msg){
+						var str=JSON.parse(msg);
+						alert("aaa"+str);
+					}
+				});
+			}
+			function serverurl(){
+				$('.leftc ul').css("display", "block");
+				$('.leftc ul').html("<li>http://io.oainin.com</li><li>http://phone.oainin.com</li><li>http://video.oainin.com</li><li>http://client.oainin.com</li>");
+				$('.leftc ul li').click(function() {
+
+					serverping($(this).text());
+					comess("当前正在进行" + $(this).text() + "访问！")
+				});
+			}
+		</script>
+	</head>
+
+	<body>
+		<h2>Console</h2>
+		<div id="Content">
+			<div class="leftc">
+				<ol>
+					<li onclick="urladd()">网站可达测试</li>
+					<li onclick="serverurl()">服务器状态测试</li>
+					<li>报错信息回馈</li>
+					<li>运行日志记录</li>
+				</ol>
+				<ul>
+
+				</ul>
+			</div>
+			<div class="rightc">
+				<textarea class="consolemessage"></textarea>
+			</div>
+		</div>
+		<div id="flu">刷新</div>
+
+	</body>
+
+</html>

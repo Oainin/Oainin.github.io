@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			#videoElement {
+				width: 100vw;
+				height: 100vh;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+
+	</head>
+
+	<body>
+		<script src="https://cdn.bootcss.com/flv.js/1.4.0/flv.min.js"></script>
+
+		<video id="videoElement" autoplay="autoplay" controls="controls"></video>
+
+		<script>
+			if(flvjs.isSupported()) {
+				var videoElement = document.getElementById('videoElement');
+				var flvPlayer = flvjs.createPlayer({
+					type: 'flv',
+					url: 'http://video.oainin.com/live/Oainin.flv'
+				});
+				flvPlayer.attachMediaElement(videoElement);
+				flvPlayer.load();
+
+			}
+		</script>
+	</body>
+
+</html>

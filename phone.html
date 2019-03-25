@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="shortcut icon" href="favicon.ico" />
+		<link rel="bookmark" href="favicon.ico" />
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {}
+			
+			#mask {
+				width: 100vw;
+				height: 100vh;
+				background: rgba(255, 255, 255, 0.5);
+			}
+			
+			#loginpage {
+				width: 100vw;
+				height: 100vh;
+			}
+			
+			#loginpage img {
+				padding-top: 50px;
+				margin: 0 auto;
+				width: 100px;
+				height: 100px;
+				display: block;
+			}
+			
+			#loginorreg {
+				width: 90vw;
+				margin: 0 auto;
+				text-align: center;
+				line-height: 50px;
+				border: 1px solid rgba(102, 204, 255, 0.5);
+				height: 50vh;
+				border-radius: 20px;
+			}
+			
+			#loginorreg input {
+				width: 70%;
+				height: 30px;
+			}
+			
+			.button_login {
+				border: 1px solid #66ccff;
+				background: #fff;
+			}
+			
+			.button_reg {
+				background: #fff;
+				margin-left: 20px;
+				border: 1px solid #66ccff;
+			}
+			
+			.bu {
+				width: 100%;
+				text-align: center;
+				margin: 0 auto;
+			}
+			
+			.linkserver {
+				color: #66ccff;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script>
+			var LINKS = "http://io.oainin.com/";
+			$(function() {
+				linking();
+123 
+			});
+
+			function login() {
+				$.ajax({
+					type: "get",
+					url: LINKS + "loginDo",
+					dataType: "json",
+					xhrFields: {
+						withCredentials: true
+					},
+					async: true,
+					data: "username=" + $('.login_name').val() + "&password=" + $('.login_password').val(),
+					success: function(str) {
+						//alert(str);
+						console.log(str);
+						if(str[0] != null) {
+							window.location.href = "p_memu.html";
+						}
+
+					},
+					error: function(er) {
+
+					}
+				});
+			}
+
+			function adduser() {
+				$.ajax({
+					type: "post",
+					url: LINKS + "adduser",
+					async: true,
+					data: "username=" + $('.login_name').val() + "&password=" + $('.login_password').val(),
+					success: function(msg) {
+						//alert(msg);,
+						console.log(msg);
+						strs = JSON.parse(msg);
+						if(strs.protocol41) {
+							$('.login_name').val('');
+							$('.login_password').val('');
+						}
+					}
+				});
+			}
+
+			function linking() {
+				$.ajax({
+					type: "get",
+					url: LINKS + "link",
+					async: true,
+					success: function(msg) {
+						$('.linkserver').text("服务器连接成功");
+						loginover();
+					},
+					error: function(msg) {
+						$('.linkserver').text("服务器连接失败");
+					}
+				});
+			}
+
+			function loginover() {
+				$.ajax({
+					type: "get",
+					url: LINKS + "loginOver",
+					dataType: "json",
+					xhrFields: {
+						withCredentials: true
+					},
+					async: true,
+					success: function(msg) {
+						//console.log(msg);
+						console.log(msg);
+						if(msg[0] != null) {
+							window.location.href = "p_memu.html";
+						} 
+						if(false){
+							window.location.href = "phone.html";
+						}
+					}
+				});
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="mask">
+			<div id="loginpage">
+				<img src="img/Oainin.png" />
+				<div id="loginorreg">
+					<p>用户名</p>
+					<input type="text" name="text" class="login_name"><br />
+					<p>密码</p>
+					<input type="password" name="password" class="login_password"><br />
+					<div class="bu">
+						<input style="width: 30%;" type="button" value="登录" onclick="login()" class="button_login">
+						<input style="width: 30%;" class="button_reg" type="button" value="注册" onclick="adduser()">
+					</div>
+					<p class="linkserver"></p>
+				</div>
+			</div>
+
+		</div>
+	</body>
+
+</html>
