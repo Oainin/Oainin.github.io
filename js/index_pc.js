@@ -273,7 +273,7 @@ $(window).scroll(function() {
 function bottomcontentio(){
 	$.ajax({
 		type: "get",
-		url: "https://blog.oainin.com/api1/oaininbottomio.php",
+		url: "http://admin.oainin.com/oaininbottomio.php",
 		async: true,
 		success: function(e) {
 			$('#bottomcontent2').html(e);
@@ -311,7 +311,7 @@ function loginoainin() {
 
 	$.ajax({
 		type: "post",
-		url: "https://blog.oainin.com/api1/logindb.php",
+		url: "http://admin.oainin.com/logindb.php",
 		async: true,
 		data: "username=" + $('.username').val() + "&password=" + $('.password').val(),
 		success: function(e) {
