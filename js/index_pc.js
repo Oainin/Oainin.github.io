@@ -236,7 +236,7 @@ function sing(str) {
 	audio1.load();
 	audio1.play();
 }
-document.onreadystatechange = se;
+//document.onreadystatechange = se;
 
 function se() {
 	if(document.readyState == "interactive") {
@@ -265,7 +265,7 @@ $(window).scroll(function() {
 		$('#loginorreg').css("display", "none");
 
 	} else {
-		//$('#loginorreg').slideDown();
+		$('#loginorreg').slideDown();
 
 	}
 });
