@@ -265,7 +265,7 @@ $(window).scroll(function() {
 		$('#loginorreg').css("display", "none");
 
 	} else {
-		$('#loginorreg').slideDown();
+		//$('#loginorreg').slideDown();
 
 	}
 });
